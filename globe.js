@@ -3,7 +3,7 @@ import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
 
 import { getISSPosition } from "/scripts/issPosition.js";
 
-// import { getCityPosition } from "/scripts/cityPosition.js";
+import { getCityPosition } from "/scripts/cityPosition.js";
 
 
 let gData = [{
@@ -173,7 +173,7 @@ const world = Globe()(document.getElementById('globeViz'))
 
 //zoomIn(world)
 
-zoomOut(world ,gData[0].lat,gData[0].lng)
+//zoomOut(world ,gData[0].lat,gData[0].lng)
 
 let address = "Denver Colorado"
 

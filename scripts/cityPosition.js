@@ -1,54 +1,45 @@
+let options = {
+    method: 'GET',
+    url: 'https://address-from-to-latitude-longitude.p.rapidapi.com/geolocationapi',
+    params: {
+        address: 'Denver Colorado'
+    },
+    headers: {
+        'X-RapidAPI-Key': 'c9778a9535mshe39df3d0fa8ac57p104e5ejsn99e4077e9a6c',
+        'X-RapidAPI-Host': 'address-from-to-latitude-longitude.p.rapidapi.com'
+    }
+};
 
-// export async function getCityPosition(cityName) {
-//     try {
-//         const response = await axios.get(`https://api-ninjas.com/v1/geocoding?city= + ${cityName}`, {
-//             headers: {
-//                 "Access-Control-Allow-Origin": true,
-//                 "Access-Control-Allow-Methods": true,
-//                 'Access-Control-Allow-Headers': true,
-//                 'Access-Control-Allow-Credentials': true,
-//                 'X-Api-Key': 'WmUv+Yncl91PIEEgr6Kxmw==x6IbwnBLgPIaNARE'
+export async function getCityPosition(address) {
+    try {
+        options.params.address = address;
+        const response = await axios.request(options);
+        return { lat: response.data.Results[0].latitude, lng: response.data.Results[0].longitude };
+    } catch (error) {
+        try {
+            getCityFromJSON(address);
+        } catch (error) {
+            console.error(error);
+        }
+    }
+}
 
-//             }
-//         });
-//         console.log(response);
-        
-//         const latitude = response.data.latitude;
-//         const longitude = response.data.longitude;
-
-//         console.log('City position:', latitude, longitude);
-//         return { latitude, longitude };
-//     } catch (error) {
-//         console.error('Error fetching city position:', error);
-//         return null;
-//     }
-// }
-
-export function getCityPosition(cityName) {
-    // Fetch the cities.json file
+export function getCityFromJSON(cityName) {
     fetch('../assets/cities.json')
-      .then(response => response.json())
-      .then(cities => {
-        // Find the city with the matching name
-        const city = cities.find(city => city.name === cityName);
-  
-        // If the city was found, return the latitude and longitude
-        if (city) {
-            console.log(city.lat, city.lng);
-            
-          return { latitude: city.lat, longitude: city.lng };
-        }
-  
-        // If the city was not found, throw an error
-        else {
-          throw new Error(`City not found: ${cityName}`);
-        }
-      })
-      .catch(error => console.error(error));
-  }
+        .then(response => response.json())
+        .then(cities => {
+            const city = cities.find(city => city.name === cityName);
 
-console.log('City Position:');
-getCityPosition("Kelowna");
+            if (city) {
+                console.log(city.lat, city.lng);
 
-// getCityPosition("New York");
-// getCityPosition("New York");
+                return { lat: city.lat, lng: city.lng };
+            }
+
+            else {
+                throw new Error(`City not found: ${cityName}`);
+            }
+        })
+        .catch(error => console.error(error));
+}
+
