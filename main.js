@@ -53,17 +53,19 @@ export function initGlobe(){
 
 	const updatePos = async () => {
 		setInterval(async () => {
-		let pos = await getISSPosition()
-		gData[0].lat = Number(pos.latitude);
-		gData[0].lng = Number(pos.longitude);
-		//console.log(gData)
-		world.customLayerData(world.customLayerData());
-		requestAnimationFrame(updatePos);
-		}, 10000);
+			let pos = await getISSPosition();
+			gData[0].lat = Number(pos.latitude);
+			gData[0].lng = Number(pos.longitude);
+			console.log(gData);
+			world.customLayerData(world.customLayerData());
+		}, 5000);
+	};
+
+	if (!window.updatePosCalled) {
+		updatePos();
+		window.updatePosCalled = true;
 	}
-	updatePos()
 
 }
-
 
 initGlobe()
