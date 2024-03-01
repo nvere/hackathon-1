@@ -60,7 +60,6 @@ export function initGlobe(world){
 		requestAnimationFrame(updatePos);
 		}, 10000);
 	}
-	updatePos()
 
 }
 
