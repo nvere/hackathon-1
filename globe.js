@@ -169,14 +169,27 @@ function zoomIn(world){
 }
 
 
+
+
+
 const world = Globe()(document.getElementById('globeViz'))
 
-//zoomIn(world)
+function initPage(){
+	zoomIn(world)
 
-//zoomOut(world ,gData[0].lat,gData[0].lng)
+}
 
-let address = "Denver Colorado"
+function onExploreButtonPush(){
+	zoomOut(world ,gData[0].lat,gData[0].lng)
+}
 
-let locObj = await findLocation(address)
-addLabel(world,locObj.lng, locObj.lat, address)
+
+async function onSubmit(ad){
+	let address = "Denver Colorado"
+	let locObj = await findLocation(address)
+	addLabel(world,locObj.lng, locObj.lat, address)
+}
+
+
+initPage()
 
