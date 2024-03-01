@@ -18,6 +18,7 @@ body {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  z-index: 2;
 }
 .navbar__logo-image {
   height: 70px;
@@ -26,6 +27,9 @@ body {
 .navbar label {
   color: white;
 }
+.navbar form {
+  margin-right: 30px;
+}
 
 .footer {
   display: flex;
@@ -33,10 +37,10 @@ body {
   left: 0;
   bottom: 0;
   width: 100%;
-  background-color: #000011;
   color: #fff;
   text-align: center;
   justify-content: center;
+  z-index: 2;
 }
 
 .footer__nav {
