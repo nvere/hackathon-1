@@ -40,8 +40,9 @@ export function initGlobe(){
 	const updatePos = async () => {
 		setInterval(async () => {
 		let pos = await getISSPosition()
-		gData.lat = Number(pos.latitude);
-		gData.lng = Number(pos.longitude);
+		gData[0].lat = Number(pos.latitude);
+		gData[0].lng = Number(pos.longitude);
+		console.log(gData)
 		world.customLayerData(world.customLayerData());
 		requestAnimationFrame(updatePos);
 		}, 5000);
