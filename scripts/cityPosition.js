@@ -18,4 +18,4 @@ export async function getCityPosition(cityName) {
     }
 }
 
-getCityPosition("New York");
+// getCityPosition("New York");
