@@ -19,19 +19,25 @@
   <header class="navbar">
     <div class="navbar__logo">
       <img class="navbar__logo-image" src="./assets/images/logos/nasa-logo-white.svg" alt="NASA Logo">
-      <form  id="nav__search">
-        <label for="nav__location-search">Enter you location</label>
-        <input class="nav__location-search" type="text" name="nav__city"
-        placeholder="Search" />
-        <button class="search__button" type="submit">GO</button>
-      </form>
     </div>
+    <form id="nav__search">
+      <label for="nav__location-search">Enter you location</label>
+      <input class="nav__location-search" type="text" name="nav__city" placeholder="Search" />
+      <button class="search__button" type="submit">GO</button>
+    </form>
   </header>
 
   <div id="globeViz"></div>
   <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
-  <footer>
-
+  <footer class="footer">
+    <div class="footer__container">
+              <nav class="footer__nav">
+            <ul class="footer__list">
+                <li class="footer__item"><a href="#" class="footer__link">00 HOME</a></li>
+                <li class="footer__item"><a href="#" class="footer__link">01 CREW ONBOARD</a></li>
+                <li class="footer__item"><a href="#" class="footer__link">02 LIVE FROM THE ISS</a></li>
+            </ul>
+    </div>
   </footer>
 </body>
 

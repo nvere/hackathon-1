@@ -11,14 +11,3 @@ form.addEventListener("submit", (event) => {
     onSubmit(city);
     form.reset();
 });
-
-
-// // Add event listener to the button
-// const button = document.querySelector('.button'); // Replace '.button' with the actual class name of your button
-// button.addEventListener('click', onExploreButtonPush);
-
-// // Function to be called when the button is clicked
-// function onExploreButtonPush() {
-//     // Call the onExploreButtonPush function from globe.js
-//     onExploreButtonPush();
-// }
