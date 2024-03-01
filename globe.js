@@ -179,17 +179,16 @@ function initPage(){
 
 }
 
-function onExploreButtonPush(){
+export function onExploreButtonPush(){
 	zoomOut(world ,gData[0].lat,gData[0].lng)
 }
 
 
 export async function onSubmit(ad){
-	let address = "Denver Colorado"
+	let address = ad;
 	let locObj = await findLocation(address)
 	addLabel(world,locObj.lng, locObj.lat, address)
 }
 
-
-initPage()
+initPage();
 
