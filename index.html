@@ -15,12 +15,16 @@
 </head>
 
 <body>
-  <header>
-    <header class="navbar">
-      <div class="navbar__logo">
-        <img class="navbar__logo-image" src="./assets/images/logos/nasa-logo-white.svg" alt="NASA Logo">
-      </div>
-    </header>
+  <header class="navbar">
+    <div class="navbar__logo">
+      <img class="navbar__logo-image" src="./assets/images/logos/nasa-logo-white.svg" alt="NASA Logo">
+      <form  id="nav__search">
+        <label for="nav__location-search">Enter you location</label>
+        <input class="nav__location-search" type="text" name="nav__location-search"
+        placeholder="Search" />
+        <button class="search__button">GO</button>
+      </form>
+    </div>
   </header>
 
   <div id="globeViz"></div>

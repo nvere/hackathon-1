@@ -184,7 +184,7 @@ function onExploreButtonPush(){
 }
 
 
-async function onSubmit(ad){
+export async function onSubmit(ad){
 	let address = "Denver Colorado"
 	let locObj = await findLocation(address)
 	addLabel(world,locObj.lng, locObj.lat, address)
