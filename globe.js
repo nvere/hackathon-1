@@ -3,7 +3,7 @@ import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
 
 import { getISSPosition } from "/scripts/issPosition.js";
 
-// import { getCityPosition } from "/scripts/cityPosition.js";
+import { getCityPosition } from "/scripts/cityPosition.js";
 
 
 let gData = [{
@@ -129,34 +129,11 @@ function connect(world, startLat, startLng, endLat, endLng){
 
 //connect(world, gData[0].lat, gData[0].lng,lData[0].lat,lData[0].lng)
 
-let options = {
-	method: 'GET',
-	url: 'https://address-from-to-latitude-longitude.p.rapidapi.com/geolocationapi',
-	params: {
-	  address: 'Denver Colorado'
-	},
-	headers: {
-	  'X-RapidAPI-Key': 'c9778a9535mshe39df3d0fa8ac57p104e5ejsn99e4077e9a6c',
-	  'X-RapidAPI-Host': 'address-from-to-latitude-longitude.p.rapidapi.com'
-	}
-  };
-  
-  async function findLocation(address){
-	try {
-		options.params.address = address;
-		const response = await axios.request(options);
-		return {lat:response.data.Results[0].longitude,lng:response.data.Results[0].latitude};
-	} catch (error) {
-		console.error(error);
-	}
-}
-
-
 const world = Globe()(document.getElementById('globeViz'))
 
 initGlobe(world)
 let address = "Denver Colorado"
 
-let locObj = await findLocation(address)
-console.log(locObj.lat)
-addLabel(world,locObj.lng, locObj.lat, address)
+let locObj = await getCityPosition(address)
+console.log(locObj)
+addLabel(world,locObj.lat, locObj.lng, address)
