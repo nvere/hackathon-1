@@ -1,18 +1,17 @@
 import * as THREE from "three"
 import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
 
+import { getISSPosition } from "/scripts/issPosition.js";
 
 
-
-export function test(lat,lng){
+export function initGlobe(){
   
 	// Gen random data
 	const gData = [{
-	  lat: lat,
-	  lng: lng,
-	  alt: 0.5,
-	  radius: 4,
-	  color: 'grey'}];
+	  lat: 0,
+	  lng: 0,
+	  alt: 0.1
+	}];
 
 	const loader = new GLTFLoader();
 
@@ -22,9 +21,6 @@ export function test(lat,lng){
 	world.pointOfView({lat:0 , lng:0, altitude: 3.5 })
 	world.customLayerData(gData)
 
-	world.customThreeObjectUpdate((obj, d) => {
-		Object.assign(obj.position, world.getCoords(d.lat, d.lng, d.alt));
-	});
 
 	loader.load('./ISS_stationary.glb', 
 	function ( gltf ) {
@@ -38,7 +34,21 @@ export function test(lat,lng){
 		function ( error ) {
 		console.error( error );
 	});
-	
-	
+	world.customThreeObjectUpdate((obj, d) => {
+		Object.assign(obj.position, world.getCoords(d.lat, d.lng, d.alt));
+	});
+	const updatePos = async () => {
+		setInterval(async () => {
+		let pos = await getISSPosition()
+		gData.lat = Number(pos.latitude);
+		gData.lng = Number(pos.longitude);
+		world.customLayerData(world.customLayerData());
+		requestAnimationFrame(updatePos);
+		}, 5000);
+	}
+	updatePos()
+
 }
-test(9,8)
+
+
+initGlobe()
