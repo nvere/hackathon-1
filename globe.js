@@ -12,7 +12,7 @@ let gData = [{
 	alt: 0.3
   }];
 
-export function initGlobe(world){
+export function initGlobe(world, zoom, startLat, startLng){
   
 	// Gen random data
 
@@ -47,7 +47,7 @@ export function initGlobe(world){
 		gData[0].lat = Number(pos.latitude);
 		gData[0].lng = Number(pos.longitude);
 		//console.log(gData[0].lat)
-		world.pointOfView({lat:gData[0].lat , lng:gData[0].lng, altitude: 4 })
+		world.pointOfView({startLat , startLng, altitude: zoom })
 
 		world.customThreeObjectUpdate((obj, d) => {
 			Object.assign(obj.position, world.getCoords(d.lat, d.lng, d.alt));
@@ -129,11 +129,67 @@ function connect(world, startLat, startLng, endLat, endLng){
 
 //connect(world, gData[0].lat, gData[0].lng,lData[0].lat,lData[0].lng)
 
+let options = {
+	method: 'GET',
+	url: 'https://address-from-to-latitude-longitude.p.rapidapi.com/geolocationapi',
+	params: {
+	  address: 'Denver Colorado'
+	},
+	headers: {
+	  'X-RapidAPI-Key': 'c9778a9535mshe39df3d0fa8ac57p104e5ejsn99e4077e9a6c',
+	  'X-RapidAPI-Host': 'address-from-to-latitude-longitude.p.rapidapi.com'
+	}
+  };
+  
+  async function findLocation(address){
+	try {
+		options.params.address = address;
+		const response = await axios.request(options);
+		return {lat:response.data.Results[0].longitude,lng:response.data.Results[0].latitude};
+	} catch (error) {
+		console.error(error);
+	}
+}
+
+
+function zoomOut(world ,startingLat,startingLng){
+	initGlobe(world, 4, startingLat, startingLng)
+	let camera = world.camera()
+	console.log(camera)
+	camera.setViewOffset( 1000, 1000, 0, 0, 1000, 1000 );
+}
+
+function zoomIn(world){
+	initGlobe(world, 1, 0, 0)
+
+	let camera = world.camera()
+	console.log(camera)
+	camera.setViewOffset( 1000, 1000, 0, -700, 1000, 1000 );
+
+}
+
+
+
+
+
 const world = Globe()(document.getElementById('globeViz'))
 
-initGlobe(world)
-let address = "Denver Colorado"
+function initPage(){
+	zoomIn(world)
 
-let locObj = await getCityPosition(address)
-console.log(locObj)
-addLabel(world,locObj.lat, locObj.lng, address)
+}
+
+function onExploreButtonPush(){
+	zoomOut(world ,gData[0].lat,gData[0].lng)
+}
+
+
+async function onSubmit(ad){
+	let address = "Denver Colorado"
+	let locObj = await findLocation(address)
+	addLabel(world,locObj.lng, locObj.lat, address)
+}
+
+
+initPage()
+
