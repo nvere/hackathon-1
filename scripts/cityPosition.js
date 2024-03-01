@@ -1,8 +1,13 @@
 export async function getCityPosition(cityName) {
     try {
-        const response = await axios.get(`https://api-ninjas.com/api/geocoding?city=${cityName}`, {
+        const response = await axios.get(`https://api-ninjas.com/v1/geocoding?city= + ${cityName}`, {
             headers: {
-                'X-Api-Key': 'gE7RNizcLiKwi4WOqq4dBg==SMC9uOEnWVszSVYm'
+                "Access-Control-Allow-Origin": true,
+                "Access-Control-Allow-Methods": true,
+                'Access-Control-Allow-Headers': true,
+                'Access-Control-Allow-Credentials': true,
+                'X-Api-Key': 'WmUv+Yncl91PIEEgr6Kxmw==x6IbwnBLgPIaNARE'
+
             }
         });
         console.log(response);
@@ -18,4 +23,4 @@ export async function getCityPosition(cityName) {
     }
 }
 
-getCityPosition("New York");
+//getCityPosition("New York");

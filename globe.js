@@ -3,6 +3,7 @@ import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
 
 import { getISSPosition } from "/scripts/issPosition.js";
 
+import { getCityPosition } from "/scripts/cityPosition.js";
 
 
 let gData = [{
@@ -122,5 +123,9 @@ function connect(world, startLat, startLng, endLat, endLng){
 const world = Globe()(document.getElementById('globeViz'))
 
 initGlobe(world)
+//let city = await getCityPosition()
+//console.log(city)
 addLabel(world, 0, 0, "test")
-connect(world, gData[0].lat, gData[0].lng,lData[0].lat,lData[0].lng)
+
+
+//connect(world, gData[0].lat, gData[0].lng,lData[0].lat,lData[0].lng)
