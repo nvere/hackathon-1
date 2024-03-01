@@ -3,7 +3,7 @@ import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
 
 import { getISSPosition } from "/scripts/issPosition.js";
 
-import { getCityPosition } from "/scripts/cityPosition.js";
+// import { getCityPosition } from "/scripts/cityPosition.js";
 
 
 let gData = [{
