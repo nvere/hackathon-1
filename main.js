@@ -45,7 +45,7 @@ export function initGlobe(){
 		console.log(gData)
 		world.customLayerData(world.customLayerData());
 		requestAnimationFrame(updatePos);
-		}, 5000);
+		}, 10000);
 	}
 	updatePos()
 
