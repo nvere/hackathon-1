@@ -4,21 +4,19 @@ import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
 import { getISSPosition } from "/scripts/issPosition.js";
 
 
-export function initGlobe(){
+export function initGlobe(world){
   
 	// Gen random data
 	const gData = [{
 	  lat: 0,
 	  lng: 0,
-	  alt: 0.1
+	  alt: 0.3
 	}];
 
 	const loader = new GLTFLoader();
 
-	const world = Globe()(document.getElementById('globeViz'))
 	world.globeImageUrl('//unpkg.com/three-globe/example/img/earth-blue-marble.jpg')
 	world.bumpImageUrl('//unpkg.com/three-globe/example/img/earth-topology.png')
-	world.pointOfView({lat:0 , lng:0, altitude: 3.5 })
 	world.customLayerData(gData)
 
 
@@ -44,6 +42,8 @@ export function initGlobe(){
 		let pos = await getISSPosition()
 		gData[0].lat = Number(pos.latitude);
 		gData[0].lng = Number(pos.longitude);
+		world.pointOfView({lat:gData[0].lat , lng:gData[0].lng, altitude: 4 })
+
 		world.customThreeObjectUpdate((obj, d) => {
 			Object.assign(obj.position, world.getCoords(d.lat, d.lng, d.alt));
 		});
@@ -56,7 +56,6 @@ export function initGlobe(){
 		let pos = await getISSPosition()
 		gData[0].lat = Number(pos.latitude);
 		gData[0].lng = Number(pos.longitude);
-		//console.log(gData)
 		world.customLayerData(world.customLayerData());
 		requestAnimationFrame(updatePos);
 		}, 10000);
@@ -65,5 +64,26 @@ export function initGlobe(){
 
 }
 
+function addLabel(world, lat, lng, text){
+	const lData = [{
+		lat: Number(lat),
+		lng: Number(lng),
+		text: text,
+		alt: 0.3
+	  }];
+	world.labelsData(lData)
+	world.labelLat(d => d.lat)
+	world.labelLng(d => d.lng)
+	world.labelText(d => d.text)
+	world.labelSize(d => 2)
+	world.labelDotRadius(d => 1.5)
+	world.labelColor(() => 'rgba(255, 165, 0, 0.75)')
+	world.labelResolution(2)
+  (document.getElementById('globeViz'))
+};
+	  
 
-initGlobe()
+const world = Globe()(document.getElementById('globeViz'))
+
+initGlobe(world)
+addLabel(world, 0, 0, "test")
