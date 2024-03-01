@@ -12,7 +12,7 @@ let gData = [{
 	alt: 0.3
   }];
 
-export function initGlobe(world){
+export function initGlobe(world, zoom, startLat, startLng){
   
 	// Gen random data
 
@@ -47,7 +47,7 @@ export function initGlobe(world){
 		gData[0].lat = Number(pos.latitude);
 		gData[0].lng = Number(pos.longitude);
 		//console.log(gData[0].lat)
-		world.pointOfView({lat:gData[0].lat , lng:gData[0].lng, altitude: 4 })
+		world.pointOfView({startLat , startLng, altitude: zoom })
 
 		world.customThreeObjectUpdate((obj, d) => {
 			Object.assign(obj.position, world.getCoords(d.lat, d.lng, d.alt));
@@ -152,11 +152,31 @@ let options = {
 }
 
 
+function zoomOut(world ,startingLat,startingLng){
+	initGlobe(world, 4, startingLat, startingLng)
+	let camera = world.camera()
+	console.log(camera)
+	camera.setViewOffset( 1000, 1000, 0, 0, 1000, 1000 );
+}
+
+function zoomIn(world){
+	initGlobe(world, 1, 0, 0)
+
+	let camera = world.camera()
+	console.log(camera)
+	camera.setViewOffset( 1000, 1000, 0, -700, 1000, 1000 );
+
+}
+
+
 const world = Globe()(document.getElementById('globeViz'))
 
-initGlobe(world)
+//zoomIn(world)
+
+zoomOut(world ,gData[0].lat,gData[0].lng)
+
 let address = "Denver Colorado"
 
 let locObj = await findLocation(address)
-console.log(locObj.lat)
 addLabel(world,locObj.lng, locObj.lat, address)
+
