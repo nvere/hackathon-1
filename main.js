@@ -34,15 +34,29 @@ export function initGlobe(){
 		function ( error ) {
 		console.error( error );
 	});
+
+
 	world.customThreeObjectUpdate((obj, d) => {
 		Object.assign(obj.position, world.getCoords(d.lat, d.lng, d.alt));
 	});
+
+	const initISS = async () => {
+		let pos = await getISSPosition()
+		gData[0].lat = Number(pos.latitude);
+		gData[0].lng = Number(pos.longitude);
+		world.customThreeObjectUpdate((obj, d) => {
+			Object.assign(obj.position, world.getCoords(d.lat, d.lng, d.alt));
+		});
+	}
+	initISS()
+
+
 	const updatePos = async () => {
 		setInterval(async () => {
 		let pos = await getISSPosition()
 		gData[0].lat = Number(pos.latitude);
 		gData[0].lng = Number(pos.longitude);
-		console.log(gData)
+		//console.log(gData)
 		world.customLayerData(world.customLayerData());
 		requestAnimationFrame(updatePos);
 		}, 10000);
