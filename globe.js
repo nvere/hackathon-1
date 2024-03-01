@@ -46,7 +46,7 @@ export function initGlobe(world){
 		let pos = await getISSPosition()
 		gData[0].lat = Number(pos.latitude);
 		gData[0].lng = Number(pos.longitude);
-		console.log(gData[0].lat)
+		//console.log(gData[0].lat)
 		world.pointOfView({lat:gData[0].lat , lng:gData[0].lng, altitude: 4 })
 
 		world.customThreeObjectUpdate((obj, d) => {
@@ -61,7 +61,7 @@ export function initGlobe(world){
 			let pos = await getISSPosition();
 			gData[0].lat = Number(pos.latitude);
 			gData[0].lng = Number(pos.longitude);
-			console.log(gData);
+			//console.log(gData);
 			world.customLayerData(world.customLayerData());
 		}, 5000);
 
@@ -95,12 +95,12 @@ function addLabel(world, lat, lng, text){
 	world.labelsData(lData)
 	world.labelLat(d => d.lat)
 	world.labelLng(d => d.lng)
+
 	world.labelText(d => d.text)
 	world.labelSize(d => 2)
 	world.labelDotRadius(d => 1.5)
 	world.labelColor(() => 'rgba(255, 165, 0, 0.75)')
-	world.labelResolution(2)
-  (document.getElementById('globeViz'))
+
 };
 
 function connect(world, startLat, startLng, endLat, endLng){
@@ -120,12 +120,43 @@ function connect(world, startLat, startLng, endLat, endLng){
   (document.getElementById('globeViz'))
 }
 
-const world = Globe()(document.getElementById('globeViz'))
 
-initGlobe(world)
+
+
 //let city = await getCityPosition()
 //console.log(city)
-addLabel(world, 0, 0, "test")
 
 
 //connect(world, gData[0].lat, gData[0].lng,lData[0].lat,lData[0].lng)
+
+let options = {
+	method: 'GET',
+	url: 'https://address-from-to-latitude-longitude.p.rapidapi.com/geolocationapi',
+	params: {
+	  address: 'Denver Colorado'
+	},
+	headers: {
+	  'X-RapidAPI-Key': 'c9778a9535mshe39df3d0fa8ac57p104e5ejsn99e4077e9a6c',
+	  'X-RapidAPI-Host': 'address-from-to-latitude-longitude.p.rapidapi.com'
+	}
+  };
+  
+  async function findLocation(address){
+	try {
+		options.params.address = address;
+		const response = await axios.request(options);
+		return {lat:response.data.Results[0].longitude,lng:response.data.Results[0].latitude};
+	} catch (error) {
+		console.error(error);
+	}
+}
+
+
+const world = Globe()(document.getElementById('globeViz'))
+
+initGlobe(world)
+let address = "Denver Colorado"
+
+let locObj = await findLocation(address)
+console.log(locObj.lat)
+addLabel(world,locObj.lng, locObj.lat, address)

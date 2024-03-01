@@ -23,8 +23,4 @@ export async function getCityPosition(cityName) {
     }
 }
 
-<<<<<<< HEAD
 //getCityPosition("New York");
-=======
-// getCityPosition("New York");
->>>>>>> b135db471290106bc03c7ff3eafd2dbd4b7fd5f6
